@@ -109,17 +109,28 @@ const WaitlistForm: React.FC = () => {
 
 const GradientBars: React.FC = () => {
   const [numBars] = useState(15);
+  const [animationOffset, setAnimationOffset] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimationOffset(prev => prev + 0.02);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
   const calculateHeight = (index: number, total: number) => {
-    const position = index / (total - 1);
-    const maxHeight = 100;
-    const minHeight = 30;
+    const position = (index / (total - 1)) * Math.PI * 2;
+    const maxHeight = 120;
+    const minHeight = 20;
     
-    const center = 0.5;
-    const distanceFromCenter = Math.abs(position - center);
-    const heightPercentage = Math.pow(distanceFromCenter * 2, 1.2);
+    // Create a sine wave with dynamic offset for continuous wave motion
+    const waveHeight = Math.sin(position * 1.5 + animationOffset) * 0.5 + 0.5;
+    const secondaryWave = Math.sin(position * 0.8 - animationOffset * 0.7) * 0.3 + 0.7;
     
-    return minHeight + (maxHeight - minHeight) * heightPercentage;
+    // Combine waves for more complex motion
+    const combinedWave = (waveHeight * 0.7 + secondaryWave * 0.3);
+    
+    return minHeight + (maxHeight - minHeight) * combinedWave;
   };
 
   return (
@@ -145,9 +156,7 @@ const GradientBars: React.FC = () => {
                 background: 'linear-gradient(to top, rgb(255, 60, 0), transparent)',
                 transform: `scaleY(${height / 100})`,
                 transformOrigin: 'bottom',
-                transition: 'transform 0.5s ease-in-out',
-                animation: 'pulseBar 2s ease-in-out infinite alternate',
-                animationDelay: `${index * 0.1}s`,
+                transition: 'transform 0.1s ease-out',
                 outline: '1px solid rgba(0, 0, 0, 0)',
                 boxSizing: 'border-box',
               }}
