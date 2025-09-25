@@ -119,16 +119,19 @@ const GradientBars: React.FC = () => {
   }, []);
 
   const calculateHeight = (index: number, total: number) => {
-    const position = (index / (total - 1)) * Math.PI * 2;
-    const maxHeight = 120;
-    const minHeight = 20;
+    const position = (index / (total - 1)) * Math.PI * 3;
+    const maxHeight = 160;
+    const minHeight = 15;
     
-    // Create a sine wave with dynamic offset for continuous wave motion
-    const waveHeight = Math.sin(position * 1.5 + animationOffset) * 0.5 + 0.5;
-    const secondaryWave = Math.sin(position * 0.8 - animationOffset * 0.7) * 0.3 + 0.7;
+    // Primary wave with larger amplitude
+    const primaryWave = Math.sin(position * 1.2 + animationOffset * 2) * 0.6 + 0.4;
+    // Secondary wave for complexity
+    const secondaryWave = Math.sin(position * 2.1 - animationOffset * 1.5) * 0.25 + 0.75;
+    // Tertiary wave for fine details
+    const tertiaryWave = Math.sin(position * 0.7 + animationOffset * 0.8) * 0.15 + 0.85;
     
-    // Combine waves for more complex motion
-    const combinedWave = (waveHeight * 0.7 + secondaryWave * 0.3);
+    // Combine all waves for rich motion
+    const combinedWave = (primaryWave * 0.6 + secondaryWave * 0.3 + tertiaryWave * 0.1);
     
     return minHeight + (maxHeight - minHeight) * combinedWave;
   };
