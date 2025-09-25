@@ -80,10 +80,30 @@ export default {
             height: "0",
           },
         },
+        "fadeIn": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(20px)"
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        },
+        "pulseBar": {
+          "0%": {
+            transform: "scaleY(0.8)"
+          },
+          "100%": {
+            transform: "scaleY(1)"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fadeIn": "fadeIn 0.8s ease-out forwards",
+        "pulseBar": "pulseBar 2s ease-in-out infinite alternate",
       },
     },
   },
